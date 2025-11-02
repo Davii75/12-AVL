@@ -151,12 +151,19 @@ NO* girarDireita(NO* y) {
 
    // Passo 1: Armazene o filho esquerdo de 'y' em uma variável temporária 'x'.  
    // Passo 2: Transfira a subárvore direita de 'x' para a subárvore esquerda de 'y'.  
-   // Passo 3: Atualize 'x' para ser o novo nó raiz da subárvore.  
+   // Passo 3: Atualize 'x' para ser o novo nó raiz da subárvore.
    // Passo 4: Recalcule as alturas dos nós afetados.  
-   // Passo 5: Retorne o novo nó raiz ('x').  
+    // Passo 5: Retorne o novo nó raiz ('x').  
+	// provisoriamente retorna o ponteiro passado como parâmetro 
 
-	// provisoriamente retorna o ponteiro passado como parâmetro
-	return y; 
+    NO* x = y->esq;
+    y->esq = x->dir;
+    x->dir = y;
+    raiz = x;
+    x->altura = maior(alturaNo(x->esq), alturaNo(x->dir)) + 1;
+    y->altura = maior(alturaNo(y->esq), alturaNo(y->dir)) + 1;
+
+    return x;
 }  
 
 NO* girarEsquerda(NO* x) {  
@@ -173,10 +180,16 @@ NO* girarEsquerda(NO* x) {
    // Passo 3: Atualize 'y' para ser o novo nó raiz da subárvore.  
    // Passo 4: Recalcule as alturas dos nós afetados.  
    // Passo 5: Retorne o novo nó raiz ('y').  
+   // provisoriamente retorna o ponteiro passado como parâmetro
 
+    NO* y = x->dir;
+    x->dir = y->esq;
+    y->esq = x;
+    raiz = y;
+    y->altura = maior(alturaNo(y->esq), alturaNo(y->dir)) + 1;
+    x->altura = maior(alturaNo(x->esq), alturaNo(x->dir)) + 1;
 
-    // provisoriamente retorna o ponteiro passado como parâmetro
-    return x; 
+    return y;
 }
 
 NO* insereArvore(NO* no, int valor) {
